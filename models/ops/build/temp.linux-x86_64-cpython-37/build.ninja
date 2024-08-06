@@ -1,0 +1,28 @@
+ninja_required_version = 1.3
+cxx = /public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/bin/x86_64-conda_cos6-linux-gnu-c++
+nvcc = /public/software/compiler/cuda/7/cuda-9.2/bin/nvcc
+
+cflags = -Wno-unused-result -Wsign-compare -DNDEBUG -fwrapv -O2 -Wall -Wstrict-prototypes -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -pipe -DNDEBUG -D_FORTIFY_SOURCE=2 -O2 -fPIC -DWITH_CUDA -I/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include/torch/csrc/api/include -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include/TH -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include/THC -I/public/software/compiler/cuda/7/cuda-9.2/include -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/include/python3.7m -c
+post_cflags = -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=MultiScaleDeformableAttention -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++14
+cuda_cflags = -DWITH_CUDA -I/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include/torch/csrc/api/include -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include/TH -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/lib/python3.7/site-packages/torch/include/THC -I/public/software/compiler/cuda/7/cuda-9.2/include -I/public_bme/data/ZhongruiHuang/anaconda3/envs/ddetr/include/python3.7m -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=MultiScaleDeformableAttention -D_GLIBCXX_USE_CXX11_ABI=0 -gencode=arch=compute_70,code=sm_70 -std=c++14
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  command = $nvcc $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+build /public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/build/temp.linux-x86_64-cpython-37/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/cpu/ms_deform_attn_cpu.o: compile /public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/cpu/ms_deform_attn_cpu.cpp
+build /public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/build/temp.linux-x86_64-cpython-37/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/cuda/ms_deform_attn_cuda.o: cuda_compile /public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/cuda/ms_deform_attn_cuda.cu
+build /public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/build/temp.linux-x86_64-cpython-37/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/vision.o: compile /public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/vision.cpp
+
+
+
+
+

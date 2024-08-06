@@ -1,0 +1,4 @@
+# ninja log v5
+3	14968	1712064138000000000	/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/build/temp.linux-x86_64-cpython-37/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/cpu/ms_deform_attn_cpu.o	3c28d37102f36f2
+4	38247	1712064162000000000	/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/build/temp.linux-x86_64-cpython-37/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/vision.o	66df4a127585ab0d
+25	30193	1712065963000000000	/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/build/temp.linux-x86_64-cpython-37/public_bme/data/gujch/share_hzr/Deformable-DETR/models/ops/src/cuda/ms_deform_attn_cuda.o	19009e32ae7b0833
